@@ -1,7 +1,7 @@
 require 'logger'
 
 module Frakup
-  module Setup
+  module Helper
     def setup(target)
       # set up global variables                                                #
       $frakup_path = File.join(target, "frakup")

@@ -21,7 +21,7 @@ when "backup"
   raise ArgumentError, "source must be reachable!" unless ARGV[1] && File.exists?(ARGV[1])
   raise ArgumentError, "target must be reachable!" unless ARGV[2] && File.exists?(ARGV[2])
   
-  Frakup::Setup.setup(target)
+  Frakup::Helper.setup(target)
   
   backupset = Frakup::Backupset.backup(source, target)
 when "restore"

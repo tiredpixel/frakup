@@ -33,7 +33,7 @@ module Frakup
       $log.info "    - duration: #{Time.at(time_stop - time_start).gmtime.strftime('%R:%S')}"
       $log.info "    - backupelements: #{backupset.backupelements.count}"
       $log.info "    - fileobjects: #{backupset.fileobjects.count}"
-      $log.info "    - size: #{Frakup::Setup.human_size(backupset.fileobjects.sum(:size))}"
+      $log.info "    - size: #{Frakup::Helper.human_size(backupset.fileobjects.sum(:size))}"
     end
   end
 end
