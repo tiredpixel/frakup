@@ -15,6 +15,8 @@ module Frakup
     property :uid,
       String,
       :length => 128
+    property :size,
+      Integer
     property :verified_at,
       DateTime
     property :uncorrupted,
@@ -46,7 +48,8 @@ module Frakup
         $log.info "    - Used Fileobject ##{fileobject.id}"
       else
         fileobject = Fileobject.create(
-          :uid => uid
+          :uid => uid,
+          :size => File.size(f)
           )
         
         $log.info "    - Created Fileobject ##{fileobject.id}"
