@@ -59,6 +59,8 @@ module Frakup
         :gid => File.stat(f).gid
         )
       
+      $log.info "Storing #{backupelement.ftype} #{f}"
+      
       case backupelement.ftype
       when "file"
         fileobject = Fileobject.store(f)
@@ -67,6 +69,8 @@ module Frakup
       end
       
       backupelement.save
+      
+      $log.info "- Created Backupelement ##{backupelement.id}"
     end
   end
 end

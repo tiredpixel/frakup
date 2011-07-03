@@ -42,17 +42,26 @@ module Frakup
         :uncorrupted => true
         )
       
-      if !fileobject
+      if fileobject
+        $log.info "- Used Fileobject ##{fileobject.id}"
+      else
         fileobject = Fileobject.create(
           :uid => uid
           )
+        
+        $log.info "- Created Fileobject ##{fileobject.id}"
         
         fileobject_full_path = File.join($fileobjects_path, fileobject.id.to_s)
         
         if !File.exists?(fileobject_full_path)
           FileUtils.mkdir_p(File.dirname(fileobject_full_path))
+          
+          $log.info "- Transferring Fileobject ##{fileobject.id}"
+          
           FileUtils.cp(f, fileobject_full_path)
         end
+        
+        $log.info "- Verifying Fileobject ##{fileobject.id}"
         
         fileobject.verify
       end
