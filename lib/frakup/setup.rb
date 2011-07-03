@@ -27,5 +27,17 @@ module Frakup
       $log = Logger.new($log_path)
     end
     module_function :setup
+    
+    def human_size(bytes)
+      ['B','KB','MB','GB','TB'].each_with_index do |unit, i|
+        if bytes > (1024 ** i) && bytes <= (1024 ** (i + 1))
+          puts bytes
+          size = bytes.to_f / (1024 ** i)
+          puts size
+          return "#{size.round(1)}#{unit}"
+        end
+      end
+    end
+    module_function :human_size
   end
 end
