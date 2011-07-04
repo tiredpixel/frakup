@@ -30,7 +30,7 @@ module Frakup
       
       self.verified_at = Time.now
       
-      self.uncorrupted = (Fileobject.uid(full_path) == self.uid)
+      self.uncorrupted = (File.exists?(full_path) && (Fileobject.uid(full_path) == self.uid))
       
       self.save
     end
