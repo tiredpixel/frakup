@@ -45,33 +45,37 @@ module Frakup
       :required => true
     
     def self.store(backupset, f)
-      mode = File.stat(f).mode.to_s(8)
-      
-      backupelement = Backupelement.create(
-        :backupset => backupset,
-        :path => f,
-        :ftype => File.stat(f).ftype,
-        :atime => File.atime(f),
-        :ctime => File.ctime(f),
-        :mtime => File.mtime(f),
-        :mode => mode[-4..-1],
-        :full_mode => mode,
-        :uid => File.stat(f).uid,
-        :gid => File.stat(f).gid
-        )
-      
-      $log.info "  Storing #{backupelement.ftype} #{f}"
-      
-      case backupelement.ftype
-      when "file"
-        fileobject = Fileobject.store(f)
+      begin
+        mode = File.stat(f).mode.to_s(8)
         
-        backupelement.fileobject = fileobject
+        backupelement = Backupelement.create(
+          :backupset => backupset,
+          :path => f,
+          :ftype => File.stat(f).ftype,
+          :atime => File.atime(f),
+          :ctime => File.ctime(f),
+          :mtime => File.mtime(f),
+          :mode => mode[-4..-1],
+          :full_mode => mode,
+          :uid => File.stat(f).uid,
+          :gid => File.stat(f).gid
+          )
+        
+        $log.info "  Storing #{backupelement.ftype} #{f}"
+        
+        case backupelement.ftype
+        when "file"
+          fileobject = Fileobject.store(f)
+          
+          backupelement.fileobject = fileobject
+        end
+        
+        backupelement.save
+        
+        $log.info "    - Created Backupelement ##{backupelement.id}"
+      rescue
+        $log.error "  Could not stat #{f}"
       end
-      
-      backupelement.save
-      
-      $log.info "    - Created Backupelement ##{backupelement.id}"
     end
   end
 end
