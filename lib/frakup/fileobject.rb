@@ -89,7 +89,7 @@ module Frakup
         if f.uncorrupted
           $log.info "  Uncorrupted Fileobject ##{f.id}"
         else
-          $log.info "  Corrupted Fileobject ##{f.id}"
+          $log.warn "  Corrupted Fileobject ##{f.id}"
         end
       end
       
@@ -98,7 +98,7 @@ module Frakup
       $log.info "  Verify finished"
       $log.info "    - duration: #{Time.at(time_stop - time_start).gmtime.strftime('%R:%S')}"
       $log.info "    - fileobjects: #{Fileobject.count}"
-      $log.info "    - corrupted: #{Fileobject.count(:uncorrupted => false)}"
+      $log.warn "    - corrupted: #{Fileobject.count(:uncorrupted => false)}"
     end
   end
 end
