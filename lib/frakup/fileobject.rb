@@ -14,7 +14,8 @@ module Frakup
     
     property :uid,
       String,
-      :length => 128
+      :length => 128,
+      :key => true
     property :size,
       Integer
     property :verified_at,

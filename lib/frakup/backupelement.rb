@@ -15,7 +15,8 @@ module Frakup
     
     property :path,
       FilePath,
-      :required => true
+      :required => true,
+      :key => true
     property :ftype,
       String,
       :required => true
