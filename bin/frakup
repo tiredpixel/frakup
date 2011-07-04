@@ -29,6 +29,12 @@ when "restore"
   source = ARGV[2]
 when "verify"
   target = ARGV[1]
+  
+  raise ArgumentError, "target must be reachable!" unless ARGV[1] && File.exists?(ARGV[1])
+  
+  Frakup::Helper.setup(target)
+  
+  Frakup::Fileobject.verify(target)
 when "list-backupsets"
   target = ARGV[1]
 end

@@ -71,5 +71,29 @@ module Frakup
       
       fileobject
     end
+    
+    def self.verify(target)
+      time_start = Time.now
+      
+      $log.info "Verify started"
+      $log.info "  - target: #{target}"
+      
+      Fileobject.each do |f|
+        f.verify
+        
+        if f.uncorrupted
+          $log.info "  Uncorrupted Fileobject ##{f.id}"
+        else
+          $log.info "  Corrupted Fileobject ##{f.id}"
+        end
+      end
+      
+      time_stop = Time.now
+      
+      $log.info "  Verify finished"
+      $log.info "    - duration: #{Time.at(time_stop - time_start).gmtime.strftime('%R:%S')}"
+      $log.info "    - fileobjects: #{Fileobject.count}"
+      $log.info "    - corrupted: #{Fileobject.count(:uncorrupted => false)}"
+    end
   end
 end
