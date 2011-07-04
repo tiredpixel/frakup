@@ -5,7 +5,7 @@ frakup is a file-related, incremental, database-dependent backup tool, for when 
 
 frakup is a *very* immature project, and, as such, is only suitable for testing and development. Indeed, it doesn't even support the restoration of files, yet! It also has no tests whatsoever ([RSpec](http://relishapp.com/rspec) tests yet to be added!). And it only works locally. You have been warned.
 
-frakup stores three main things in `target/`:
+frakup stores three main things in the target directory:
 
 *   `frakup.sqlite3`: This is a [SQLite](http://www.sqlite.org/) database which contains all information about the backup, including: paths; timestamps; modes; owners; and groups.
 *   `fileobjects/`: This contains all the files themselves.
@@ -20,8 +20,8 @@ frakup has three main concepts:
 frakup has some interesting features:
 
 *   Files are identified by a SHA512 hash. Using this has a number of advantages: renames, moves, and copies are automatically 'detected' - in fact, frakup doesn't care; corruption of files on the target can easily be detected (by using `verify`). It also has some disadvantages: it is theoretically possible for the hashes to collide, which would damage the integrity of the backup - this is very unlikely, though, and methods to help detect this can easily be added; it is necessary to compute the hash for every file each time a backup is run, and this can be slow for large files.
-*   frakup is designed for backing up files that don't change often - archives, photos, music, and videos are good examples of this. If a file changes, it will get backed up again in its entirety. Thus, the concept of incremental backups only exists on a file-level, and diffs are unheard-of. It does mean, however, that there is no cost to moving large files around - this was one of the guiding principles in its design.
-*   Backups made with frakup are designed to be manually-recoverable. That means, it should not be impossibly hard for a competent person to restore a backup, even without frakup.
+*   frakup is designed for backing up files that don't change often - archives, photos, music, and videos are good examples of this. If a file changes, it will get backed up again in its entirety. Thus, the concept of incremental backups only exists on a backup-level, and diffs are unheard-of. It does mean, however, that there is no cost to moving large files around - this was one of the guiding principles in its design.
+*   Backups made with frakup are designed to be manually-recoverable. That means, it should not be impossibly-hard for a competent person to restore a backup, even without frakup.
 
 Getting Started
 ---------------
