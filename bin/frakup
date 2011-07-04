@@ -7,9 +7,7 @@ require_relative '../lib/frakup'
 OptionParser.new do |opts|
   opts.banner = "Usage:
     frakup backup [options] source target
-    frakup restore [options] target source
     frakup verify [options] target
-    frakup list-backupsets [options] target
     "
 end.parse!
 
@@ -24,9 +22,6 @@ when "backup"
   Frakup::Helper.setup(target)
   
   backupset = Frakup::Backupset.backup(source, target)
-when "restore"
-  target = ARGV[1]
-  source = ARGV[2]
 when "verify"
   target = ARGV[1]
   
@@ -35,6 +30,4 @@ when "verify"
   Frakup::Helper.setup(target)
   
   Frakup::Fileobject.verify(target)
-when "list-backupsets"
-  target = ARGV[1]
 end
