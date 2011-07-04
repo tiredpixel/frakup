@@ -24,7 +24,9 @@ module Frakup
       Boolean
     
     def verify
-      full_path = File.join($fileobjects_path, id.to_s)
+      folder = (id / 10000).to_s
+      
+      full_path = File.join($fileobjects_path, folder, id.to_s)
       
       self.verified_at = Time.now
       
@@ -55,7 +57,9 @@ module Frakup
         
         $log.info "    - Created Fileobject ##{fileobject.id}"
         
-        fileobject_full_path = File.join($fileobjects_path, fileobject.id.to_s)
+        fileobject_folder = (fileobject.id / 10000).to_s
+        
+        fileobject_full_path = File.join($fileobjects_path, fileobject_folder, fileobject.id.to_s)
         
         if !File.exists?(fileobject_full_path)
           FileUtils.mkdir_p(File.dirname(fileobject_full_path))
