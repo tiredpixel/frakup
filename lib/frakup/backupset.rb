@@ -23,7 +23,7 @@ module Frakup
       
       $log.info "  Created Backupset ##{backupset.id}"
       
-      Pathname.glob(File.join(source, "*")).each do |f|
+      Pathname.glob(File.join(source, "**", "*")).each do |f|
         Backupelement.store(backupset, f)
       end
       
