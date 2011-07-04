@@ -12,12 +12,13 @@ module Frakup
     has n, :backupelements
     has n, :backupsets, :through => :backupelements
     
+    property :size,
+      Integer,
+      :key => true
     property :uid,
       String,
       :length => 128,
       :key => true
-    property :size,
-      Integer
     property :verified_at,
       DateTime
     property :uncorrupted,
@@ -30,7 +31,12 @@ module Frakup
       
       self.verified_at = Time.now
       
-      self.uncorrupted = (File.exists?(full_path) && (Fileobject.uid(full_path) == self.uid))
+      self.uncorrupted = (
+        File.exists?(full_path) && (
+          Fileobject.size(full_path) == self.size &&
+          Fileobject.uid(full_path) == self.uid
+          )
+        )
       
       self.save
     end
@@ -39,10 +45,16 @@ module Frakup
       Digest::SHA512.file(f).hexdigest
     end
     
+    def self.size(f)
+      File.size(f)
+    end
+    
     def self.store(f)
       uid = Fileobject.uid(f)
+      size = Fileobject.size(f)
       
       fileobject = Fileobject.first(
+        :size => size,
         :uid => uid,
         :uncorrupted => true
         )
@@ -51,8 +63,8 @@ module Frakup
         $log.info "    - Used Fileobject ##{fileobject.id}"
       else
         fileobject = Fileobject.create(
-          :uid => uid,
-          :size => File.size(f)
+          :size => size,
+          :uid => uid
           )
         
         $log.info "    - Created Fileobject ##{fileobject.id}"
