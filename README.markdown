@@ -40,21 +40,10 @@ It is possible to verify backed-up files by running the verify feature:
 
 This will output the results to the log, as well as setting a flag for each Fileobject in the database. If the file is corrupted, a new file will be transferred the next time a backup is run. This effectively marks that file as requiring a full backup, rather than the usual incremental one.
 
-Roadmap
--------
-
-*   Write restore feature.
-*   Compress backed-up files.
-*   Make flexible includes and excludes.
-*   Allow for partial restoration of files.
-*   Write a comprehensive set of tests.
-*   Package into gem, with frakup added to system path.
-*   Add encryption option - both symmetric and key.
-
 Contributing
 ------------
 
-Contributions are encouraged! Please fork the repository and write your code, write tests to cover the new functionality, then send a pull request.
+Contributions are encouraged! Please fork the repository and write your code, write tests to cover the new functionality, then send a pull request. Have a look in [Issues](https://github.com/tiredpixel/frakup/issues) for ideas about what to write. :)
 
 Credits
 -------
